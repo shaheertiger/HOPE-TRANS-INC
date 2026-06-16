@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Logo Overlay Fixed</title>
+  <style>
+    body {
+      background: #111;
+      margin: 0;
+      padding: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .truck-container {
+      position: relative;
+      width: 1024px;
+      height: 1024px;
+      overflow: hidden;
+      background: #e4eeff; /* Matches the hero background just in case */
+    }
+    .hero-composite {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1024px;
+      height: 1024px;
+      display: block;
+    }
+    /* White paint patch to cover hallucinated DALL-E text */
+    .truck-logo-patch {
+      position: absolute;
+      right: 151px;
+      bottom: 240px;
+      width: 350px;
+      height: 280px;
+      background: linear-gradient(160deg, #eef1f4 0%, #c8cfd5 100%); 
+      transform-style: preserve-3d;
+      transform: perspective(600px) rotateY(-22deg) skewY(-7deg);
+      border-radius: 4px;
+      z-index: 1;
+    }
+    .truck-logo-overlay {
+      position: absolute;
+      right: 158px;
+      bottom: 250px;
+      width: 330px;
+      height: auto;
+      transform-style: preserve-3d;
+      transform: perspective(600px) rotateY(-22deg) skewY(-7deg);
+      opacity: 0.95;
+      z-index: 2;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="truck-container" id="truck-container">
+    <img src="/hero_composite.png" alt="Truck" class="hero-composite" />
+    <div class="truck-logo-patch"></div>
+    <img src="/logo.jpeg" alt="Logo" class="truck-logo-overlay" />
+  </div>
+</body>
+</html>
