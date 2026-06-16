@@ -71,6 +71,22 @@ export default function Home() {
         ))}
       </section>
 
+      {/* ── COVERAGE MARQUEE ── */}
+      <div className="marquee" aria-hidden="true">
+        <div className="marquee-track">
+          {[...Array(2)].map((_, copy) =>
+            [
+              'Ontario', 'Quebec', 'British Columbia', 'Alberta',
+              'Manitoba', 'Saskatchewan', 'Nova Scotia', 'New Brunswick',
+            ].map((p) => (
+              <span className="marquee-item" key={`${copy}-${p}`}>
+                {p}
+              </span>
+            ))
+          )}
+        </div>
+      </div>
+
       {/* ── SERVICES ── */}
       <section id="services" className="services-section">
         <p className="section-eyebrow reveal-on-scroll">What We Offer</p>
