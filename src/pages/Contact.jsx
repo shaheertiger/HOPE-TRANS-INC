@@ -33,6 +33,14 @@ export default function Contact() {
             </span>
           </a>
 
+          <a href={COMPANY.hotlineHref} className="contact-info-row">
+            <span className="contact-info-icon">☎️</span>
+            <span>
+              <span className="contact-info-label">24/7 Hotline</span>
+              <span className="contact-info-value">{COMPANY.hotline}</span>
+            </span>
+          </a>
+
           <a href={`mailto:${COMPANY.email}`} className="contact-info-row">
             <span className="contact-info-icon">✉️</span>
             <span>

@@ -36,6 +36,9 @@ export default function Footer() {
           <a href={COMPANY.phoneHref} className="footer-contact-link">
             📞 {COMPANY.phone}
           </a>
+          <a href={COMPANY.hotlineHref} className="footer-contact-link">
+            ☎️ Hotline: {COMPANY.hotline}
+          </a>
           <a href={`mailto:${COMPANY.email}`} className="footer-contact-link">
             ✉️ {COMPANY.email}
           </a>
