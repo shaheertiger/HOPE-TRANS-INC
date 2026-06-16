@@ -24,50 +24,75 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Lock body scroll while the mobile drawer is open
+  useEffect(() => {
+    document.body.classList.toggle('nav-open', open);
+    return () => document.body.classList.remove('nav-open');
+  }, [open]);
+
+  const navLink = (l) => (
+    <NavLink
+      to={l.to}
+      end={l.end}
+      className={({ isActive }) => (isActive ? 'active' : '')}
+    >
+      {l.label}
+    </NavLink>
+  );
+
   return (
-    <nav className={`navbar ${scrolled ? 'is-scrolled' : ''}`}>
-      <Link to="/" className="nav-logo" onClick={close}>
-        <img src="/logo.jpeg" alt={COMPANY.name} className="nav-logo-img" />
-        <div className="nav-logo-text">
-          <span className="brand-name">{COMPANY.shortName}</span>
-          <span className="brand-sub">Inc.</span>
-        </div>
-      </Link>
+    <>
+      <nav className={`navbar ${scrolled ? 'is-scrolled' : ''}`}>
+        <Link to="/" className="nav-logo" onClick={close}>
+          <img src="/logo.jpeg" alt={COMPANY.name} className="nav-logo-img" />
+          <div className="nav-logo-text">
+            <span className="brand-name">{COMPANY.shortName}</span>
+            <span className="brand-sub">Inc.</span>
+          </div>
+        </Link>
 
-      {/* Backdrop behind the mobile slide-in panel */}
-      {open && <div className="nav-backdrop" onClick={close} />}
+        {/* Desktop inline links */}
+        <ul className="nav-links">
+          {LINKS.map((l) => (
+            <li key={l.to}>{navLink(l)}</li>
+          ))}
+        </ul>
 
-      <ul className={`nav-links ${open ? 'is-open' : ''}`} onClick={close}>
-        {LINKS.map((l) => (
-          <li key={l.to}>
-            <NavLink
-              to={l.to}
-              end={l.end}
-              className={({ isActive }) => (isActive ? 'active' : '')}
-            >
-              {l.label}
-            </NavLink>
-          </li>
-        ))}
-        <li className="nav-links-cta">
-          <Link to="/contact" className="nav-cta-btn">
-            Get a Quote
-          </Link>
-        </li>
-      </ul>
+        <Link to="/contact" className="nav-cta-btn nav-cta-desktop">
+          Get a Quote
+        </Link>
 
-      <Link to="/contact" className="nav-cta-btn nav-cta-desktop">
-        Get a Quote
-      </Link>
+        <button
+          className={`nav-toggle ${open ? 'is-open' : ''}`}
+          aria-label="Toggle navigation menu"
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span /><span /><span />
+        </button>
+      </nav>
 
-      <button
-        className={`nav-toggle ${open ? 'is-open' : ''}`}
-        aria-label="Toggle navigation menu"
-        aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-      >
-        <span /><span /><span />
-      </button>
-    </nav>
+      {/* Mobile drawer + backdrop — rendered OUTSIDE the navbar so that
+          position:fixed is relative to the viewport, not the navbar's
+          backdrop-filter containing block. */}
+      <div
+        className={`nav-backdrop ${open ? 'is-open' : ''}`}
+        onClick={close}
+        aria-hidden="true"
+      />
+      <aside className={`nav-drawer ${open ? 'is-open' : ''}`}>
+        <button className="nav-drawer-close" aria-label="Close menu" onClick={close}>
+          ✕
+        </button>
+        <ul className="nav-drawer-links" onClick={close}>
+          {LINKS.map((l) => (
+            <li key={l.to}>{navLink(l)}</li>
+          ))}
+        </ul>
+        <Link to="/contact" className="nav-cta-btn nav-drawer-cta" onClick={close}>
+          Get a Quote
+        </Link>
+      </aside>
+    </>
   );
 }
