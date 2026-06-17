@@ -1,20 +1,17 @@
 import { Link } from 'react-router-dom';
 import { COMPANY } from '../siteData.js';
-import { Mark } from './Chevron.jsx';
 
 export default function Footer() {
   return (
     <>
       <footer className="footer">
         <div className="footer-brand">
-          <div className="footer-logo-row">
-            <Mark className="footer-mark" />
-            <span className="footer-brand-name">{COMPANY.name}</span>
-          </div>
+          <img src="/logo.jpeg" alt={COMPANY.name} className="footer-logo" />
+          <span className="footer-brand-name">{COMPANY.name}</span>
           <p className="footer-tagline">
             {COMPANY.tagline}
             <br />
-            Safe. Reliable. On time — freight enhanced.
+            Safe. Reliable. On Time.
           </p>
         </div>
 
@@ -36,16 +33,27 @@ export default function Footer() {
 
         <div className="footer-col">
           <h4>Contact</h4>
-          <a href={COMPANY.phoneHref}>{COMPANY.phone}</a>
-          <a href={COMPANY.hotlineHref}>Hotline: {COMPANY.hotline}</a>
-          <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
-          <a href={COMPANY.mapsHref} target="_blank" rel="noopener noreferrer">
-            {COMPANY.addressLine1}, {COMPANY.addressLine2}
+          <a href={COMPANY.phoneHref} className="footer-contact-link">
+            📞 {COMPANY.phone}
+          </a>
+          <a href={COMPANY.hotlineHref} className="footer-contact-link">
+            ☎️ Hotline: {COMPANY.hotline}
+          </a>
+          <a href={`mailto:${COMPANY.email}`} className="footer-contact-link">
+            ✉️ {COMPANY.email}
+          </a>
+          <a
+            href={COMPANY.mapsHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-contact-link"
+          >
+            📍 {COMPANY.addressLine1}, {COMPANY.addressLine2}
           </a>
         </div>
       </footer>
       <div className="footer-bottom">
-        © {new Date().getFullYear()} {COMPANY.name} — All rights reserved.
+        © {new Date().getFullYear()} {COMPANY.name} All rights reserved.
       </div>
     </>
   );
