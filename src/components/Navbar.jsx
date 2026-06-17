@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { COMPANY } from '../siteData.js';
+import { Mark } from './Chevron.jsx';
 
 const LINKS = [
   { to: '/', label: 'Home', end: true },
-  { to: '/about', label: 'About' },
+  { to: '/about', label: 'About us' },
   { to: '/services', label: 'Services' },
   { to: '/fleet', label: 'Fleet' },
   { to: '/careers', label: 'Careers' },
@@ -16,7 +17,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const close = () => setOpen(false);
 
-  // Add shadow / shrink once user scrolls
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
@@ -24,18 +24,13 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Lock body scroll while the mobile drawer is open
   useEffect(() => {
     document.body.classList.toggle('nav-open', open);
     return () => document.body.classList.remove('nav-open');
   }, [open]);
 
   const navLink = (l) => (
-    <NavLink
-      to={l.to}
-      end={l.end}
-      className={({ isActive }) => (isActive ? 'active' : '')}
-    >
+    <NavLink to={l.to} end={l.end} className={({ isActive }) => (isActive ? 'active' : '')}>
       {l.label}
     </NavLink>
   );
@@ -44,14 +39,13 @@ export default function Navbar() {
     <>
       <nav className={`navbar ${scrolled ? 'is-scrolled' : ''}`}>
         <Link to="/" className="nav-logo" onClick={close}>
-          <img src="/logo.jpeg" alt={COMPANY.name} className="nav-logo-img" />
+          <Mark className="nav-mark" />
           <div className="nav-logo-text">
             <span className="brand-name">{COMPANY.shortName}</span>
-            <span className="brand-sub">Inc.</span>
+            <span className="brand-sub">Freight Enhanced</span>
           </div>
         </Link>
 
-        {/* Desktop inline links */}
         <ul className="nav-links">
           {LINKS.map((l) => (
             <li key={l.to}>{navLink(l)}</li>
@@ -59,7 +53,7 @@ export default function Navbar() {
         </ul>
 
         <Link to="/contact" className="nav-cta-btn nav-cta-desktop">
-          Get a Quote
+          Contact us
         </Link>
 
         <button
@@ -72,25 +66,16 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile drawer + backdrop — rendered OUTSIDE the navbar so that
-          position:fixed is relative to the viewport, not the navbar's
-          backdrop-filter containing block. */}
-      <div
-        className={`nav-backdrop ${open ? 'is-open' : ''}`}
-        onClick={close}
-        aria-hidden="true"
-      />
+      <div className={`nav-backdrop ${open ? 'is-open' : ''}`} onClick={close} aria-hidden="true" />
       <aside className={`nav-drawer ${open ? 'is-open' : ''}`}>
-        <button className="nav-drawer-close" aria-label="Close menu" onClick={close}>
-          ✕
-        </button>
+        <button className="nav-drawer-close" aria-label="Close menu" onClick={close}>✕</button>
         <ul className="nav-drawer-links" onClick={close}>
           {LINKS.map((l) => (
             <li key={l.to}>{navLink(l)}</li>
           ))}
         </ul>
         <Link to="/contact" className="nav-cta-btn nav-drawer-cta" onClick={close}>
-          Get a Quote
+          Contact us
         </Link>
       </aside>
     </>
